@@ -57,7 +57,7 @@ module CoreMethods
   end
 
   def aggregate(*args)
-    c = self.respond_to?(:collection) ? collection : self.class.collection
+    c = self.respond_to?(:collection) ? collection_name : self.class.grex_collection
     Grex::Config.connection[c].aggregate(args)
   end
 

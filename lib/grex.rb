@@ -27,11 +27,11 @@ module Grex
 
   module ClassMethods
     include CoreMethods
-    def collection(c = nil)
+    def grex_collection(c = nil)
       if c
-        @collection = c
+        @grex_collection = c
       else
-        @collection
+        @grex_collection
       end
     end
   end
@@ -39,7 +39,7 @@ module Grex
   def self.included(base)
     base.extend(ClassMethods)
     if defined?(Mongoid) && base.ancestors.include?(Mongoid::Document)
-      base.collection(base.collection_name)
+      base.grex_collection(base.collection_name)
     end
   end
 
