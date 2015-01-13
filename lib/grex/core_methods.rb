@@ -65,5 +65,4 @@ module CoreMethods
     Grex::Config.connection[collection].aggregate(args)
   end
 
-  alias :find :match
 end

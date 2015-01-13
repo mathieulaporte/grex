@@ -5,8 +5,21 @@ require 'grex/core_methods'
 
 module Grex
 
-  ASC   = 1
-  DESC  = -1
+  ASC     = 1
+  DESC    = -1
+  PRUNE   = "$$PRUNE"
+  DESCEND = "$$DESCEND"
+
+  TYPE                 = {}
+  TYPE[Float]          = 1
+  TYPE[String]         = 2
+  TYPE[Hash]           = 3
+  TYPE[Array]          = 4
+  TYPE[BSON::ObjectId] = 7
+  TYPE[Boolean]        = 8 if defined? Boolean
+  TYPE[Date]           = 9
+  TYPE[nil]            = 10
+  TYPE[Regexp]         = 11
 
   include RefinedHash
   include RefinedSymbol
@@ -25,7 +38,7 @@ module Grex
 
   def self.included(base)
     base.extend(ClassMethods)
-    if base.ancestors.map(&:to_s).include?('Mongoid::Document')
+    if defined?(Mongoid) && base.ancestors.include?(Mongoid::Document)
       base.collection(base.collection_name)
     end
   end

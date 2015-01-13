@@ -32,6 +32,10 @@ module RefinedSymbol
       { self => { :$cond => [ h[:if], h[:then], h[:else] ] } }
     end
 
+    def if_null(h = { :if => nil, :then => nil})
+      { self => { :$ifNull => [ h[:if], h[:then] ]} }
+    end
+
     def <(sym)
       { :$gt => [self, sym] }
     end
@@ -54,6 +58,10 @@ module RefinedSymbol
 
     def !=(sym)
       { :$ne => [ self, sym ] }
+    end
+
+    def type(_type)
+      { self => { :$type => Grex::TYPE[_type] } }
     end
   end
 end
