@@ -58,11 +58,11 @@ module CoreMethods
 
   def aggregate(*args)
     c = self.respond_to?(:collection) ? collection : self.class.collection
-    Config.connection[c].aggregate(args)
+    Grex::Config.connection[c].aggregate(args)
   end
 
   def aggregate_for(collection, *args)
-    Config.connection[collection].aggregate(args)
+    Grex::Config.connection[collection].aggregate(args)
   end
 
   alias :find :match

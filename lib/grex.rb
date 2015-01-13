@@ -13,7 +13,7 @@ module Grex
   include CoreMethods
 
   module ClassMethods
-
+    include CoreMethods
     def collection(c = nil)
       if c
         @collection = c
@@ -21,9 +21,6 @@ module Grex
         @collection
       end
     end
-
-    include CoreMethods
-
   end
 
   def self.included(base)
