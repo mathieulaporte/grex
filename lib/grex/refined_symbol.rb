@@ -12,6 +12,10 @@ module RefinedSymbol
       { :$dayOfMonth => "$#{self.to_s.split('.').first}" }
     end
 
+    def week
+      { :$week => "$#{self.to_s.split('.').first}" }
+    end
+
     def +(sym)
       { :$add => ["$#{self}", sym] }
     end
