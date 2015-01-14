@@ -56,6 +56,9 @@ module CoreMethods
     { :$out => collection_name }
   end
 
+    def type(_type)
+      { :$type => Grex::TYPE[_type] }
+    end
   def aggregate(*args)
     c = self.respond_to?(:collection) ? collection_name : self.class.grex_collection
     Grex::Config.connection[c].aggregate(args)

@@ -16,6 +16,10 @@ module RefinedSymbol
       { :$week => "$#{self.to_s.split('.').first}" }
     end
 
+    def hour
+      { :$hour => "$#{self.to_s.split('.').first}" }
+    end
+
     def +(sym)
       { :$add => ["$#{self}", sym] }
     end
@@ -62,10 +66,6 @@ module RefinedSymbol
 
     def !=(sym)
       { :$ne => [ self, sym ] }
-    end
-
-    def type(_type)
-      { self => { :$type => Grex::TYPE[_type] } }
     end
   end
 end
