@@ -40,8 +40,8 @@ module CoreMethods
     { :$sort => h }
   end
 
-  def group(h)
-    { :$group => h }
+  def group(key, *accumulators)
+    { :$group => { _id: key, *accumulators } }
   end
 
   def redact(h)
