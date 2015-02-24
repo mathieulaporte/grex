@@ -67,5 +67,10 @@ module RefinedSymbol
     def !=(sym)
       { :$ne => [ self, sym ] }
     end
+
+    def add_to_set(field)
+      { self => { "$addToSet" => "$#{field}" } }
+    end
+
   end
 end
