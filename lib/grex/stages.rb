@@ -12,7 +12,7 @@ module Stages
       :$match => h
     }
   end
-  alias :query, :match
+  alias query match
 
   def redact(h)
     { :$redact => h }
