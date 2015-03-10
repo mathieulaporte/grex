@@ -1,11 +1,14 @@
 module Expressions
   module Operators
     module Boolean
-      def and(field)
+      def _and(queries)
+        { :$and => queries }
       end
-      def or(field)
+      def _or(queries)
+        { :$or => queries }
       end
-      def not(field)
+      def _not(queries)
+        { :$not => queries }
       end
     end
 
