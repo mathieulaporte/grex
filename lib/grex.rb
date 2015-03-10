@@ -80,7 +80,7 @@ class Symbol
   end
 
   def type(type)
-    { self => { $type: TYPE[type] } }
+    { self => { :$type => TYPE[type] } }
   end
 
   def year
