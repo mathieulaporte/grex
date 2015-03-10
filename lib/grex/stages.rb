@@ -7,7 +7,7 @@ module Stages
     { :$project => h }
   end
 
-  def match(h)
+  def match(h = {})
     h.merge(block_given? ? yield : {})
     {
       :$match => h
