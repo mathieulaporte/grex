@@ -79,6 +79,10 @@ class Symbol
     { self => { :$lte => sym } }
   end
 
+  def type(type)
+    { self => { $type: TYPE[type] } }
+  end
+
   def year
     { :$year => "$#{self}" }
   end
