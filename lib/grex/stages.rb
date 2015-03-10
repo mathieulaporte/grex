@@ -2,6 +2,7 @@ module Grex
 
 module Stages
 
+
   def project(h)
     { :$project => h }
   end
@@ -11,6 +12,7 @@ module Stages
       :$match => h
     }
   end
+  alias :query, :match
 
   def redact(h)
     { :$redact => h }

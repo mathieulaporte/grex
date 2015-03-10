@@ -1,13 +1,13 @@
 module Expressions
   module Operators
     module Boolean
-      def _and(queries)
+      def _and(*queries)
         { :$and => queries }
       end
-      def _or(queries)
+      def _or(*queries)
         { :$or => queries }
       end
-      def _not(queries)
+      def _not(*queries)
         { :$not => queries }
       end
     end
