@@ -16,6 +16,7 @@ module Grex
   TYPE[BSON::ObjectId] = 7
   TYPE[Boolean]        = 8 if defined? Boolean
   TYPE[Date]           = 9
+  TYPE[Time]           = 9
   TYPE[nil]            = 10
   TYPE[Regexp]         = 11
 
