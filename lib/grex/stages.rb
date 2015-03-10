@@ -8,6 +8,7 @@ module Stages
   end
 
   def match(h)
+    h.merge(block_given? ? yield : {})
     {
       :$match => h
     }
