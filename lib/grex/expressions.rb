@@ -120,7 +120,12 @@ module Expressions
 
   module Accumulators
     def sum(field)
-      { :$sum => "$#{field}" }
+      case field
+      when String, Symbol
+        { :$sum => "$#{field}" }
+      when Numeric
+        { :$sum => field }
+      end
     end
     def avg(key)
     end
