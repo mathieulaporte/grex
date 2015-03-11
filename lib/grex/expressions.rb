@@ -138,9 +138,11 @@ module Expressions
     def last(field)
       { :$last => "$#{field}" }
     end
-    def max(key)
+    def max(field)
+      { :$max => "$#{field}" }
     end
-    def min(key)
+    def min(field)
+      { :$min => "$#{field}" }
     end
     def push(key)
     end
