@@ -144,9 +144,11 @@ module Expressions
     def min(field)
       { :$min => "$#{field}" }
     end
-    def push(key)
+    def push(field)
+      { :$push => "$#{field}" }
     end
-    def addToSet(key)
+    def addToSet(field)
+      { :$addToSet => "$#{field}" }
     end
   end
 end
