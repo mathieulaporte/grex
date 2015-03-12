@@ -130,25 +130,30 @@ module Expressions
         { :$sum => field }
       end
     end
-    def avg(key)
+    %w(avg first last max min push addToSet).each do |acc|
+      define_method(acc) do |field|
+        { "$#{acc}" => "$#{field}" }
+      end
     end
-    def first(field)
-      { :$first => "$#{field}" }
-    end
-    def last(field)
-      { :$last => "$#{field}" }
-    end
-    def max(field)
-      { :$max => "$#{field}" }
-    end
-    def min(field)
-      { :$min => "$#{field}" }
-    end
-    def push(field)
-      { :$push => "$#{field}" }
-    end
-    def addToSet(field)
-      { :$addToSet => "$#{field}" }
-    end
+    # def avg(key)
+    # end
+    # def first(field)
+    #   { :$first => "$#{field}" }
+    # end
+    # def last(field)
+    #   { :$last => "$#{field}" }
+    # end
+    # def max(field)
+    #   { :$max => "$#{field}" }
+    # end
+    # def min(field)
+    #   { :$min => "$#{field}" }
+    # end
+    # def push(field)
+    #   { :$push => "$#{field}" }
+    # end
+    # def addToSet(field)
+    #   { :$addToSet => "$#{field}" }
+    # end
   end
 end
