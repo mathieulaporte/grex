@@ -47,7 +47,10 @@ module Expressions
     end
 
     module Arithmetic
-      def add(field)
+      def add(ex1, ex2)
+        ex1 = ex1.kind_of? Integer ? ex1 : "$#{ex1}"
+        ex2 = ex2.kind_of? Integer ? ex2 : "$#{ex2}"
+        { :$add => [ex1, ex2] }
       end
       def subtract(field)
       end
