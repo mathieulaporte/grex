@@ -79,6 +79,7 @@ module Expressions
 
     module Array
       def size(field)
+        { :$size => "$#{field}" }
       end
       def map(field)
       end

@@ -23,6 +23,7 @@ module Grex
   include Stages
   include Expressions::Operators
   include Expressions::Operators::Boolean
+  include Expressions::Operators::Array
   include Expressions::Accumulators
 
   def self.aggregate

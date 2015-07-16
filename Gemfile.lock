@@ -13,4 +13,7 @@ PLATFORMS
 
 DEPENDENCIES
   minitest
-  mongodb
+  mongodb (>= 1.8.1)
+
+BUNDLED WITH
+   1.10.5
