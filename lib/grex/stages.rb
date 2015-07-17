@@ -10,7 +10,6 @@ module Grex
         :$match => h
       }
     end
-    alias_method query match
 
     def redact(h)
       { :$redact => h }
