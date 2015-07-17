@@ -1,4 +1,7 @@
 module Expressions
+  def self.is_an_expression?(ex)
+    [Integer, Hash].include?(ex.class)
+  end
   module Operators
     module Boolean
       def _and(*queries)
@@ -48,8 +51,8 @@ module Expressions
 
     module Arithmetic
       def add(ex1, ex2)
-        ex1 = ex1.kind_of? Integer ? ex1 : "$#{ex1}"
-        ex2 = ex2.kind_of? Integer ? ex2 : "$#{ex2}"
+        ex1 = Expressions.is_an_expression?(ex1) ? ex1 : "$#{ex1}"
+        ex2 = Expressions.is_an_expression?(ex2) ? ex2 : "$#{ex2}"
         { :$add => [ex1, ex2] }
       end
       def subtract(field)
