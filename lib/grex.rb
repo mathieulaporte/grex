@@ -39,43 +39,7 @@ module Grex
 end
 
 class Symbol
-  def gt(sym)
-    { self => { :$gt => sym } }
-  end
-
-  def lt(sym)
-    { self => { :$lt => sym } }
-  end
-
-  def gte(sym)
-    { self => { :$gte => sym } }
-  end
-
-  def lte(sym)
-    { self => { :$lte => sym } }
-  end
-
   def type(type)
     { self => { :$type => Grex::TYPE[type] } }
-  end
-
-  def year
-    { :$year => "$#{self}" }
-  end
-
-  def month
-    { :$month => "$#{self}" }
-  end
-
-  def day
-    { :$dayOfMonth => "$#{self}" }
-  end
-
-  def week
-    { :$week => "$#{self}" }
-  end
-
-  def hour
-    { :$hour => "$#{self}" }
   end
 end
