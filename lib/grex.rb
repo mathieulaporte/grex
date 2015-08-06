@@ -32,53 +32,24 @@ module Grex
   end
 
   def generate_aggregation(*args)
-    raise 'Wrong parameters' unless args.map{ |arg| arg.kind_of?(Hash) }.reduce(&:&)
+    fail 'Wrong parameters' unless args.map{ |arg| arg.kind_of?(Hash) }.reduce(&:&)
     args
   end
-
-  # module ClassMethods
-  #   include CoreMethods
-  #   def grex_collection(c = nil)
-  #     if c
-  #       @grex_collection = c
-  #     else
-  #       @grex_collection
-  #     end
-  #   end
-  # end
-
-  # def self.included(base)
-  #   base.extend(ClassMethods)
-  #   if defined?(Mongoid) && base.ancestors.include?(Mongoid::Document)
-  #     base.grex_collection(base.collection_name)
-  #   end
-  # end
-
-  # class Config
-  #   def self.connection=(mongo_connection)
-  #     @@connection = mongo_connection
-  #   end
-
-  #   def self.connection
-  #     @@connection
-  #   end
-  # end
-
-  # def self.config
-  #   yield Config
-  # end
 end
 
 class Symbol
   def gt(sym)
     { self => { :$gt => sym } }
   end
+
   def lt(sym)
     { self => { :$lt => sym } }
   end
+
   def gte(sym)
     { self => { :$gte => sym } }
   end
+
   def lte(sym)
     { self => { :$lte => sym } }
   end

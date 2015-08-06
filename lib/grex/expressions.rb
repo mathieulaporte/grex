@@ -7,45 +7,53 @@ module Expressions
       def _and(*queries)
         { :$and => queries }
       end
+
       def _or(*queries)
         { :$or => queries }
       end
+
       def _not(*queries)
         { :$not => queries }
       end
     end
 
     module Set
-      def setEquals(field)
+      def set_equals(*expressions)
+        { :$setEquals => expressions }
       end
-      def setIntersection(field)
+
+      def set_intersection(*arrays)
+        { :$setIntersection => arrays }
       end
-      def setUnion(field)
+
+      def set_union(*expressions)
+        { :$setUnion => expressions }
       end
-      def setDifference(field)
+
+      def set_difference(array1, array2)
+        { :$setDifference => [array1, array2] }
       end
-      def setIsSubset(field)
+
+      def set_is_subset(array1, array2)
+        { :$setIsSubset => [array1, array2] }
       end
-      def anyElementTrue(field)
+
+      def any_element_true(array)
+        { :$anyElementTrue => [array] }
       end
-      def allElementsTrue(field)
+
+      def all_elements_true(array)
+        { :$allElementTrue => [array] }
       end
     end
 
     module Comparator
-      def cmp(field)
-      end
-      def eq(field)
-      end
-      def gt(field)
-      end
-      def gte(field)
-      end
-      def lt(field)
-      end
-      def lte(field)
-      end
-      def ne(field)
+      %w(cmp eq gt gte lt lte ne).each do |cmp|
+        define_method(cmp) do |ex1, ex2|
+          ex1 = ex1.is_a? Symbol ? "$#{ex1}" : ex1
+          ex2 = ex2.is_a? Symbol ? "$#{ex2}" : ex2
+          { "$#{cmp}" => [ex1, ex2] }
+        end
       end
     end
 
@@ -87,6 +95,7 @@ module Expressions
       def size(field)
         { :$size => "$#{field}" }
       end
+
       def map(field)
       end
     end
@@ -98,32 +107,57 @@ module Expressions
 
     module Date
       def day_of_year(field)
+        field.to_sym
       end
+
       def day_of_month(field)
+        field.to_sym
       end
+
       def day_of_week(field)
+        field.to_sym
       end
+
       def year(field)
+        field.to_sym.year
       end
+
       def month(field)
+        field.to_sym
       end
+
       def week(field)
+        field.to_sym
       end
+
       def hour(field)
+        field.to_sym
       end
+
       def minute(field)
+        field.to_sym
       end
+
       def second(field)
+        field.to_sym
       end
+
       def millisecond(field)
+        field.to_sym
+      end
+
+      def date_to_string(field, format)
+        { format: format, date: "$#{field}" }
       end
     end
 
     module Condition
-      def cond
+      def cond(_if, _then, _else)
+        { :$cond => [_if, _then, _else] }
       end
 
-      def if_null
+      def if_null(expression, _then)
+        { :$ifNull => [expression, _then] }
       end
     end
   end
