@@ -3,7 +3,7 @@ module Expressions
     [Integer, Hash].include?(ex.class)
   end
   module Operators
-    module Boolean
+    module BooleanAggregationOperators
       def _and(*queries)
         { :$and => queries }
       end
@@ -17,7 +17,7 @@ module Expressions
       end
     end
 
-    module Set
+    module SetAggregationOperators
       def set_equals(*expressions)
         { :$setEquals => expressions }
       end
@@ -57,7 +57,7 @@ module Expressions
       end
     end
 
-    module Arithmetic
+    module ArithmeticAggregationOperators
       def add(ex1, ex2)
         ex1 = Expressions.is_an_expression?(ex1) ? ex1 : "$#{ex1}"
         ex2 = Expressions.is_an_expression?(ex2) ? ex2 : "$#{ex2}"
@@ -73,7 +73,7 @@ module Expressions
       end
     end
 
-    module String
+    module StringAggregationOperators
       def concat(field)
       end
       def substr(field)
@@ -86,12 +86,12 @@ module Expressions
       end
     end
 
-    module Search
+    module SearchAggregationOperators
       def meta(key)
       end
     end
 
-    module Array
+    module ArrayAggregationOperators
       def size(field)
         { :$size => "$#{field}" }
       end
@@ -100,12 +100,12 @@ module Expressions
       end
     end
 
-    module Variable
+    module VariableAggregationOperators
       def let
       end
     end
 
-    module Date
+    module DateAggregationOperators
       def day_of_year(field)
         field.to_sym
       end
@@ -147,11 +147,11 @@ module Expressions
       end
 
       def date_to_string(field, format)
-        { format: format, date: "$#{field}" }
+        { :$dateToString => { format: format, date: "$#{field}" } }
       end
     end
 
-    module Condition
+    module ConditionAggregationOperators
       def cond(_if, _then, _else)
         { :$cond => [_if, _then, _else] }
       end
@@ -162,7 +162,7 @@ module Expressions
     end
   end
 
-  module Accumulators
+  module AccumulatorsAggregationOperators
     %w(sum avg first last max min push addToSet).each do |acc|
       define_method(acc) do |field|
         case field

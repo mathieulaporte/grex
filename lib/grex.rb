@@ -22,10 +22,11 @@ module Grex
 
   include Stages
   include Expressions::Operators
-  include Expressions::Operators::Boolean
-  include Expressions::Operators::Arithmetic
-  include Expressions::Operators::Array
-  include Expressions::Accumulators
+  include Expressions::Operators::BooleanAggregationOperators
+  include Expressions::Operators::ArithmeticAggregationOperators
+  include Expressions::Operators::ArrayAggregationOperators
+  include Expressions::Operators::DateAggregationOperators
+  include Expressions::AccumulatorsAggregationOperators
 
   def self.aggregate
     generate_aggregation(yield)
