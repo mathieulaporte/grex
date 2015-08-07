@@ -97,7 +97,7 @@ module Expressions
       end
 
       def map(input:, as:, _in:)
-        { input: input, as: as, in: _in }
+        { :$map => { input: input, as: as, in: _in } }
       end
     end
 
