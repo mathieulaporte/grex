@@ -96,8 +96,8 @@ module Expressions
         { :$size => "$#{field}" }
       end
 
-      def map(input:, _in:, as:)
-        { input: input, in: _in, as: as }
+      def map(input:, as:, _in:)
+        { input: input, as: as, in: _in }
       end
     end
 
