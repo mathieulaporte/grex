@@ -26,6 +26,7 @@ module Grex
   include Expressions::Operators::ArithmeticAggregationOperators
   include Expressions::Operators::ArrayAggregationOperators
   include Expressions::Operators::DateAggregationOperators
+  include Expressions::Operators::ConditionAggregationOperators
   include Expressions::AccumulatorsAggregationOperators
 
   def self.aggregate

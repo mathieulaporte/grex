@@ -58,6 +58,8 @@ module Grex
         return { keys => "$#{keys}" }
       when Array
         return Hash[keys.map { |key| [key, "$#{key}"] }]
+      when nil
+        nil
       else
         fail 'Must be a Hash, Symbol or Array'
       end
