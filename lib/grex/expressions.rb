@@ -47,11 +47,11 @@ module Expressions
       end
     end
 
-    module Comparator
+    module ComparatorAggregationOperators
       %w(cmp eq gt gte lt lte ne).each do |cmp|
         define_method(cmp) do |ex1, ex2|
-          ex1 = ex1.is_a? Symbol ? "$#{ex1}" : ex1
-          ex2 = ex2.is_a? Symbol ? "$#{ex2}" : ex2
+          ex1 = ex1.is_a?(Symbol) ? "$#{ex1}" : ex1
+          ex2 = ex2.is_a?(Symbol) ? "$#{ex2}" : ex2
           { "$#{cmp}" => [ex1, ex2] }
         end
       end
@@ -96,7 +96,8 @@ module Expressions
         { :$size => "$#{field}" }
       end
 
-      def map(field)
+      def map(input:, _in:, as:)
+        { input: input, in: _in, as: as }
       end
     end
 

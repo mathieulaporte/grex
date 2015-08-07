@@ -27,7 +27,7 @@ module Grex
       { :$unwind => "$#{sym}" }
     end
 
-    def group_by(keys)
+    def group_by(keys = nil)
       {
         :$group => {
           _id: parse_keys(keys)
