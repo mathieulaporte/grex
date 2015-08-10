@@ -53,8 +53,8 @@ module Expressions
     module ComparatorAggregationOperators
       %w(cmp eq gt gte lt lte ne).each do |cmp|
         define_method(cmp) do |ex1, ex2|
-          ex1 = parse_arg(ex1)
-          ex2 = parse_arg(ex2)
+          ex1 = Expressions.parse_arg(ex1)
+          ex2 = Expressions.parse_arg(ex2)
           { "$#{cmp}" => [ex1, ex2] }
         end
       end
@@ -62,8 +62,8 @@ module Expressions
 
     module ArithmeticAggregationOperators
       def add(ex1, ex2)
-        ex1 = parse_arg(ex1)
-        ex2 = parse_arg(ex2)
+        ex1 = Expressions.parse_arg(ex1)
+        ex2 = Expressions.parse_arg(ex2)
         { :$add => [ex1, ex2] }
       end
       def subtract(field)
@@ -96,11 +96,11 @@ module Expressions
 
     module ArrayAggregationOperators
       def size(field)
-        { :$size => parse_arg(field) }
+        { :$size => Expressions.parse_arg(field) }
       end
 
       def map(input:, as:, _in:)
-        { :$map => { input: parse_arg(input), as: as, in: parse_arg(_in) } }
+        { :$map => { input: Expressions.parse_arg(input), as: as, in: Expressions.parse_arg(_in) } }
       end
     end
 
@@ -169,7 +169,7 @@ module Expressions
   module AccumulatorsAggregationOperators
     %w(sum avg first last max min push addToSet).each do |acc|
       define_method(acc) do |field|
-        { "$#{acc}" => parse_arg(field) }
+        { "$#{acc}" => Expressions.parse_arg(field) }
       end
     end
   end
