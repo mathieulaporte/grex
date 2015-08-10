@@ -2,7 +2,7 @@ module Expressions
   def self.is_an_expression?(ex)
     [Integer, Hash, String].include?(ex.class)
   end
-  def parse_arg(expression)
+  def self.parse_arg(expression)
     expression.is_a? Symbol ? "$#{expression}" : expression
   end
   module Operators
