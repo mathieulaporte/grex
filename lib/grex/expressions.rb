@@ -1,6 +1,9 @@
 module Expressions
   def self.is_an_expression?(ex)
-    [Integer, Hash].include?(ex.class)
+    [Integer, Hash, String].include?(ex.class)
+  end
+  def parse_arg(expression)
+    expression.is_a? Symbol ? "$#{expression}" : expression
   end
   module Operators
     module BooleanAggregationOperators
@@ -50,8 +53,8 @@ module Expressions
     module ComparatorAggregationOperators
       %w(cmp eq gt gte lt lte ne).each do |cmp|
         define_method(cmp) do |ex1, ex2|
-          ex1 = ex1.is_a?(Symbol) ? "$#{ex1}" : ex1
-          ex2 = ex2.is_a?(Symbol) ? "$#{ex2}" : ex2
+          ex1 = parse_arg(ex1)
+          ex2 = parse_arg(ex2)
           { "$#{cmp}" => [ex1, ex2] }
         end
       end
@@ -59,8 +62,8 @@ module Expressions
 
     module ArithmeticAggregationOperators
       def add(ex1, ex2)
-        ex1 = Expressions.is_an_expression?(ex1) ? ex1 : "$#{ex1}"
-        ex2 = Expressions.is_an_expression?(ex2) ? ex2 : "$#{ex2}"
+        ex1 = parse_arg(ex1)
+        ex2 = parse_arg(ex2)
         { :$add => [ex1, ex2] }
       end
       def subtract(field)
@@ -93,11 +96,11 @@ module Expressions
 
     module ArrayAggregationOperators
       def size(field)
-        { :$size => "$#{field}" }
+        { :$size => parse_arg(field) }
       end
 
       def map(input:, as:, _in:)
-        { :$map => { input: input, as: as, in: _in } }
+        { :$map => { input: parse_arg(input), as: as, in: parse_arg(_in) } }
       end
     end
 
@@ -153,8 +156,8 @@ module Expressions
     end
 
     module ConditionAggregationOperators
-      def cond(_if, _then, _else)
-        { :$cond => [_if, _then, _else] }
+      def cond(hash)
+        { :$cond => [hash[:if], hash[:then], hash[:else]] }
       end
 
       def if_null(expression, _then)
@@ -166,12 +169,7 @@ module Expressions
   module AccumulatorsAggregationOperators
     %w(sum avg first last max min push addToSet).each do |acc|
       define_method(acc) do |field|
-        case field
-        when Symbol
-          { "$#{acc}" => "$#{field}" }
-        else
-          { "$#{acc}" => field }
-        end
+        { "$#{acc}" => parse_arg(field) }
       end
     end
   end

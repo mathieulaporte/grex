@@ -5,8 +5,9 @@ module Grex
 
   ASC     = 1
   DESC    = -1
-  PRUNE   = "$$PRUNE"
-  DESCEND = "$$DESCEND"
+  PRUNE   = '$$PRUNE'
+  DESCEND = '$$DESCEND'
+  ROOT    = '$$ROOT'
 
   TYPE                 = {}
   TYPE[Float]          = 1
@@ -32,7 +33,8 @@ module Grex
   include Expressions::AccumulatorsAggregationOperators
 
   def self.aggregate
-    generate_aggregation(yield)
+    grex = Object.new.extend(Grex)
+    grex.generate_aggregation(yield(grex))
   end
 
   def generate_aggregation(*args)
