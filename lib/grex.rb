@@ -26,6 +26,7 @@ module Grex
   include Expressions::Operators::BooleanAggregationOperators
   include Expressions::Operators::ArithmeticAggregationOperators
   include Expressions::Operators::ArrayAggregationOperators
+  include Expressions::Operators::VariableAggregationOperators
   include Expressions::Operators::DateAggregationOperators
   include Expressions::Operators::ConditionAggregationOperators
   include Expressions::Operators::ComparatorAggregationOperators

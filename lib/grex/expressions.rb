@@ -7,16 +7,19 @@ module Expressions
   end
   module Operators
     module BooleanAggregationOperators
-      def _and(*queries)
-        { :$and => queries }
+      def _and(*expressions)
+        expressions = expressions.map { |ex| Expressions.to_field(ex) }
+        { :$and => expressions }
       end
 
-      def _or(*queries)
-        { :$or => queries }
+      def _or(*expressions)
+        expressions = expressions.map { |ex| Expressions.to_field(ex) }
+        { :$or => expressions }
       end
 
-      def _not(*queries)
-        { :$not => queries }
+      def _not(*expressions)
+        expressions = expressions.map { |ex| Expressions.to_field(ex) }
+        { :$not => expressions }
       end
     end
 
@@ -105,49 +108,18 @@ module Expressions
     end
 
     module VariableAggregationOperators
-      def let
+      def let(vars:, _in:)
+        { :$let => { vars: vars, in: _in } }
       end
     end
 
     module DateAggregationOperators
-      def day_of_year(field)
-        field.to_sym
-      end
-
-      def day_of_month(field)
-        field.to_sym
-      end
-
-      def day_of_week(field)
-        field.to_sym
-      end
-
-      def year(field)
-        field.to_sym.year
-      end
-
-      def month(field)
-        field.to_sym
-      end
-
-      def week(field)
-        field.to_sym
-      end
-
-      def hour(field)
-        field.to_sym
-      end
-
-      def minute(field)
-        field.to_sym
-      end
-
-      def second(field)
-        field.to_sym
-      end
-
-      def millisecond(field)
-        field.to_sym
+      %w(day_of_year day_of_month day_of_week year month week hour minute second millisecond).each do |date_operator|
+        define_method(date_operator) do |field|
+          date_operator = date_operator.split('_').map
+                          .with_index { |w, i| i == 0 ? w : w.capitalize }.join
+          { "$#{date_operator}" => Expressions.to_field(field) }
+        end
       end
 
       def date_to_string(field, format)
