@@ -11,7 +11,7 @@
 #         _id : "$_id.state",
 #         biggestCity:  { $last: "$_id.city" },
 #         biggestPop:   { $last: "$pop" },
-#         smallestCity: { $first: "$_id.city" },
+#         smallestCit y: { $first: "$_id.city" },
 #         smallestPop:  { $first: "$pop" }
 #       }
 #    }

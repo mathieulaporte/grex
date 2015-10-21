@@ -41,6 +41,31 @@ module Grex
       }
     end
 
+    def lookup(from:, local_field:, foreign_field:, as:)
+      {
+        :$lookup => {
+          from:         from,
+          localField:   local_field,
+          foreignField: foreign_field,
+          as:           as
+        }
+      }
+    end
+
+    def sample(size:)
+      {
+        :$sample => {
+          size: size
+        }
+      }
+    end
+
+    def index_stats
+      {
+        :$indexStats => {}
+      }
+    end
+
     def geo_near
     end
 
