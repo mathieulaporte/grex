@@ -41,6 +41,7 @@ module Grex
       }
     end
 
+    # Only available on entreprise edition...
     def lookup(from:, local_field:, foreign_field:, as:)
       {
         :$lookup => {

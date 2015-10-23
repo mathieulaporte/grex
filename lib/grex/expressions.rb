@@ -69,7 +69,10 @@ module Expressions
         ex2 = Expressions.to_field(ex2)
         { :$add => [ex1, ex2] }
       end
-      def subtract(field)
+      def subtract(ex1, ex2)
+        ex1 = Expressions.to_field(ex1)
+        ex2 = Expressions.to_field(ex2)
+        { :$substract => [ex1, ex2] }
       end
       def multiply(field)
       end
