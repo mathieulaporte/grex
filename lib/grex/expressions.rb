@@ -64,21 +64,23 @@ module Expressions
     end
 
     module ArithmeticAggregationOperators
-      def add(ex1, ex2)
-        ex1 = Expressions.to_field(ex1)
-        ex2 = Expressions.to_field(ex2)
-        { :$add => [ex1, ex2] }
+      %w(add substract multiply divide mod).each do |cmp|
+        define_method(cmp) do |ex1, ex2|
+          ex1 = Expressions.to_field(ex1)
+          ex2 = Expressions.to_field(ex2)
+          { "$#{cmp}" => [ex1, ex2] }
+        end
       end
-      def subtract(ex1, ex2)
-        ex1 = Expressions.to_field(ex1)
-        ex2 = Expressions.to_field(ex2)
-        { :$substract => [ex1, ex2] }
+      def trunc(number)
+        {
+          :$trunc => Expressions.to_field(number)
+        }
       end
-      def multiply(field)
+
+      def ceil
       end
-      def divide(field)
-      end
-      def mod(field)
+
+      def floor
       end
     end
 
@@ -107,6 +109,30 @@ module Expressions
 
       def map(input:, as:, _in:)
         { :$map => { input: Expressions.to_field(input), as: as, in: Expressions.to_field(_in) } }
+      end
+
+      def slice
+      end
+
+      def array_elem_at
+      end
+
+      def concat_arrays(arrays)
+        { :$concatArrays => arrays }
+      end
+
+      def is_array
+      end
+
+      def filter(array_name, as, condition)
+        {
+          :$filter =>
+            {
+              input: array_name,
+              as: as,
+              cond: condition
+            }
+        }
       end
     end
 
@@ -142,7 +168,7 @@ module Expressions
   end
 
   module AccumulatorsAggregationOperators
-    %w(sum avg first last max min push addToSet).each do |acc|
+    %w(sum avg first last max min push add_to_set std_dev_samp std_dev_pop).each do |acc|
       define_method(acc) do |field|
         { "$#{acc}" => Expressions.to_field(field) }
       end
