@@ -81,7 +81,7 @@ module Grex
       when Hash
         return keys
       when Symbol, String
-        return { keys => "$#{keys}" }
+        return "$#{keys}"
       when Array
         return Hash[keys.map { |key| [key, "$#{key}"] }]
       when nil
