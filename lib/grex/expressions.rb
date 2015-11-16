@@ -168,7 +168,7 @@ module Expressions
   end
 
   module AccumulatorsAggregationOperators
-    %w(sum avg first last max min push add_to_set std_dev_samp std_dev_pop).each do |acc|
+    %w(sum avg first last max min push addToSet stdDevSamp stdDevPop).each do |acc|
       define_method(acc) do |field|
         { "$#{acc}" => Expressions.to_field(field) }
       end
