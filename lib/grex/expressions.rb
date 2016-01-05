@@ -114,7 +114,8 @@ module Expressions
       def slice
       end
 
-      def array_elem_at
+      def array_elem_at(array, i)
+        { :$arrayElemAt => [Expressions.to_field(array), i] }
       end
 
       def concat_arrays(arrays)
